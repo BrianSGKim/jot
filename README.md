@@ -2,7 +2,9 @@
 
 A [Claude Code](https://claude.ai/claude-code) skill for quick-capturing ideas into scoped scratchpads.
 
-Keep a running log of ideas, tidbits, and observations — separated by scope (work vs personal) — with optional git backup. Supports English, Korean, and Japanese.
+You know the feeling — you're deep in a task and a small idea hits you. Something you want to explore later, a concept worth revisiting, a micro-insight that'll vanish if you don't write it down. So you `/remind` yourself on Slack, scribble in a notebook, or dump it into a messy Notion page. Since Claude Code is already open anyway, `/jot` lets you capture that thought without breaking your flow — and it'll be there when you're ready to dig deeper.
+
+Supports English, Korean, and Japanese.
 
 ---
 
@@ -81,7 +83,9 @@ MIT
 
 아이디어를 빠르게 기록하는 [Claude Code](https://claude.ai/claude-code) 스킬입니다.
 
-업무와 개인 영역을 분리하여 아이디어, 메모, 관찰 사항을 기록할 수 있으며, 선택적으로 git 백업을 지원합니다. 영어, 한국어, 일본어를 지원합니다.
+작업 중에 문득 떠오르는 아이디어가 있잖아요. 나중에 깊게 파고 싶은 컨셉, 잊기 전에 적어둬야 할 마이크로 인사이트. 그래서 Slack에 `/remind`로 남기거나, 공책에 끄적이거나, Notion에 지저분하게 적어두곤 하죠. 어차피 Claude Code가 항상 열려 있으니, `/jot`으로 흐름 끊기지 않고 바로 기록하세요 — 나중에 꺼내볼 준비가 됐을 때 거기 있을 겁니다.
+
+영어, 한국어, 일본어를 지원합니다.
 
 ## 설치
 
@@ -154,7 +158,9 @@ curl -o ~/.claude/commands/jot.md https://raw.githubusercontent.com/BrianSGKim/j
 
 アイデアを素早くメモするための [Claude Code](https://claude.ai/claude-code) スキルです。
 
-仕事とプライベートのスコープを分けて、アイデア・気づき・メモを記録できます。オプションでgitバックアップにも対応。英語・韓国語・日本語に対応しています。
+作業中にふと浮かぶアイデア、ありますよね。後で深掘りしたいコンセプト、今メモしないと消えてしまうちょっとした気づき。Slackの`/remind`に残したり、ノートに走り書きしたり、Notionに雑に書き留めたり。Claude Codeはどうせ開いているのだから、`/jot`で流れを止めずにサッと記録 — 後で振り返る準備ができた時、ちゃんとそこにあります。
+
+英語・韓国語・日本語に対応しています。
 
 ## インストール
 
