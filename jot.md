@@ -8,6 +8,18 @@ argument: "<flags> <idea text>" — see --help for usage
 
 A shareable Claude Code skill for capturing ideas into scoped scratchpads with optional git backup.
 
+## Language
+
+Read `~/.claude/jot-config.json` and check the `lang` field. All user-facing output (confirmations, help text, error messages, prompts, and "Why it matters" notes) MUST be in that language. If no config exists or lang is missing, default to English.
+
+| lang | Language |
+|------|----------|
+| `en` | English |
+| `ko` | Korean |
+| `ja` | Japanese |
+
+The idea text itself is never translated — store it exactly as the user typed it.
+
 ## Parsing
 
 Parse `$ARGUMENTS` for flags and idea text:
@@ -24,6 +36,7 @@ Parse `$ARGUMENTS` for flags and idea text:
 | `--list` | Show last ~10 ideas from a scope. Usage: `--list me` or `--list work` |
 | `--setup` | First-time configuration wizard |
 | `--newrepo <url>` | Change the git repo for a scope. Usage: `--me --newrepo <url>` or `--work --newrepo <url>` |
+| `--lang <en\|ko\|ja>` | Change display language |
 
 If no recognized flag is found, respond with the `--help` output.
 
@@ -31,35 +44,42 @@ If no recognized flag is found, respond with the `--help` output.
 
 ## --help
 
-Print this and stop:
+Print usage instructions in the configured language and stop.
 
+English version:
 ```
 /jot — Quick idea capture to scoped scratchpads
 
 Usage:
-  /jot --work <idea>        Save an idea to your work scratchpad
-  /jot --me <idea>          Save an idea to your personal scratchpad
-  /jot --list work          Show recent work ideas
-  /jot --list me            Show recent personal ideas
-  /jot --setup              First-time setup (configure paths & repos)
-  /jot --work --newrepo <url>   Change work git repo
-  /jot --me --newrepo <url>     Change personal git repo
+  /jot --work <idea>              Save an idea to your work scratchpad
+  /jot --me <idea>                Save an idea to your personal scratchpad
+  /jot --list work                Show recent work ideas
+  /jot --list me                  Show recent personal ideas
+  /jot --setup                    First-time setup (configure paths & repos)
+  /jot --work --newrepo <url>     Change work git repo
+  /jot --me --newrepo <url>       Change personal git repo
+  /jot --lang <en|ko|ja>          Change display language
 
 Config: ~/.claude/jot-config.json
 ```
+
+For ko/ja: translate the descriptions but keep flag names and paths as-is.
 
 ---
 
 ## --setup
 
-Walk the user through first-time configuration. For each scope (work, me):
+Walk the user through first-time configuration. All prompts in the configured language (or ask language first if no config exists).
 
-1. Ask: "Where should [scope] ideas be stored?" (a directory path — the ideas.md file will be created here)
-2. Ask: "Git repo URL for [scope]? (leave blank for no git sync)"
+1. Ask: "Preferred language? (en/ko/ja)"
+2. For each scope (work, me):
+   - Ask: "Where should [scope] ideas be stored?" (a directory path — ideas.md will be created here)
+   - Ask: "Git repo URL for [scope]? (leave blank for no git sync)"
 
 Write the config to `~/.claude/jot-config.json`:
 ```json
 {
+  "lang": "en",
   "work": {
     "ideas_file": "<path>/ideas.md",
     "repo": "<url or null>"
@@ -82,7 +102,7 @@ Running scratchpad of ideas, tidbits, and observations.
 
 ## --me / --work (core capture)
 
-1. **Read config** from `~/.claude/jot-config.json`. If it doesn't exist, tell the user to run `/jot --setup` first.
+1. **Read config** from `~/.claude/jot-config.json`. If it doesn't exist, tell the user to run `/jot --setup` first (in English as fallback).
 
 2. **Read the ideas file** for the chosen scope.
 
@@ -90,11 +110,11 @@ Running scratchpad of ideas, tidbits, and observations.
    ```
 
    ### <short title> (<YYYY-MM-DD>)
-   <the idea as stated>
-   > Why it matters: <one-line contextual note if obvious from the idea or conversation>
+   <the idea exactly as typed by the user>
+   > Why it matters: <one-line contextual note in the configured language>
    ```
 
-4. **Confirm** with one line. User is in flow.
+4. **Confirm** with one line in the configured language. User is in flow.
 
 ---
 
@@ -110,7 +130,17 @@ Read the ideas file for the specified scope. Print the last ~10 `### ` headings 
 2. Read `~/.claude/jot-config.json`.
 3. Update the `repo` field for that scope.
 4. Write the config back.
-5. Confirm: "Updated [scope] repo to <url>"
+5. Confirm in configured language.
+
+---
+
+## --lang
+
+1. Parse the language code (en, ko, ja).
+2. Read `~/.claude/jot-config.json`.
+3. Update the `lang` field.
+4. Write the config back.
+5. Confirm in the NEW language.
 
 ---
 
@@ -121,3 +151,4 @@ Read the ideas file for the specified scope. Print the last ~10 `### ` headings 
 - Ideas files are plain markdown, portable, and grep-friendly
 - Git sync is manual (push when you want to back up) — this skill doesn't auto-push
 - To use: copy `jot.md` to `~/.claude/commands/` and run `/jot --setup`
+- Supports English, Korean, and Japanese — set during setup or change with `--lang`
