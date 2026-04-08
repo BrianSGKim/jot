@@ -43,7 +43,6 @@ You'll be asked for your preferred language, scratchpad paths, and optional git 
 ```
 /jot --work batch API calls to reduce rate limiting
 /jot --me check out that ceramics studio in Itaewon
-/jot --work API 호출을 배치 처리해서 rate limiting 줄이기
 /jot --list work
 ```
 
@@ -114,7 +113,6 @@ curl -o ~/.claude/commands/jot.md https://raw.githubusercontent.com/BrianSGKim/j
 ```
 /jot --work API 호출을 배치 처리해서 rate limiting 줄이기
 /jot --me 이태원 도자기 공방 가보기
-/jot --work batch API calls to reduce rate limiting
 /jot --list work
 ```
 
@@ -181,7 +179,6 @@ curl -o ~/.claude/commands/jot.md https://raw.githubusercontent.com/BrianSGKim/j
 ```
 /jot --work API呼び出しをバッチ処理してrate limitingを減らす
 /jot --me 梨泰院の陶芸工房に行ってみる
-/jot --work batch API calls to reduce rate limiting
 /jot --list work
 ```
 
