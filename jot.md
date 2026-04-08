@@ -106,15 +106,20 @@ Running scratchpad of ideas, tidbits, and observations.
 
 2. **Read the ideas file** for the chosen scope.
 
-3. **Append** the new entry:
+3. **Detect the project context** from the current working directory. The project tag is the root folder name of the current project (e.g., if CWD is `C:\Users\USER\Documents\Sazo\work_updates`, the tag is `work_updates`). This is informational context, not a required field — it helps trace where the idea came from if needed later.
+
+4. **Append** the new entry:
    ```
 
-   ### <short title> (<YYYY-MM-DD>)
+   ### <short title> (<YYYY-MM-DD HH:MM>) `#project-name`
    <the idea exactly as typed by the user>
    > Why it matters: <one-line contextual note in the configured language>
    ```
 
-4. **Confirm** with one line in the configured language. User is in flow.
+   - **Date and time:** Use the current local date and 24h time (`YYYY-MM-DD HH:MM`)
+   - **Project tag:** Append `` `#<project-folder-name>` `` after the timestamp. Use the root folder name of the current working directory. If no project context is available, omit the tag.
+
+5. **Confirm** with one line in the configured language. User is in flow.
 
 ---
 
