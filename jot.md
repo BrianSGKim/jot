@@ -36,6 +36,7 @@ Parse `$ARGUMENTS` for flags and idea text:
 | `--list` | Show last ~10 ideas from a scope. Usage: `--list me` or `--list work` |
 | `--setup` | First-time configuration wizard |
 | `--newrepo <url>` | Change the git repo for a scope. Usage: `--me --newrepo <url>` or `--work --newrepo <url>` |
+| `--remove` | Remove an idea from a scope. Usage: `--remove work` or `--remove me` |
 | `--lang <en\|ko\|ja>` | Change display language |
 
 If no recognized flag is found, respond with the `--help` output.
@@ -56,6 +57,8 @@ Usage:
   /jot --list work                Show recent work ideas
   /jot --list me                  Show recent personal ideas
   /jot --setup                    First-time setup (configure paths & repos)
+  /jot --remove work              Remove a work idea (shows list to pick from)
+  /jot --remove me                Remove a personal idea
   /jot --work --newrepo <url>     Change work git repo
   /jot --me --newrepo <url>       Change personal git repo
   /jot --lang <en|ko|ja>          Change display language
@@ -98,6 +101,14 @@ Create `ideas.md` in each directory if it doesn't exist:
 Running scratchpad of ideas, tidbits, and observations.
 ```
 
+3. **Add jot reference to `~/.claude/CLAUDE.md`** (user-scoped). If the file doesn't exist, create it. If it exists, append only if the jot line isn't already present. Add:
+
+```
+When planning or brainstorming, scan ~/.claude/jot/work/ideas.md and ~/.claude/jot/me/ideas.md for relevant ideas — the ### headings are designed for quick scanning.
+```
+
+This ensures jot content is passively available during planning in any project.
+
 ---
 
 ## --me / --work (core capture)
@@ -116,6 +127,7 @@ Running scratchpad of ideas, tidbits, and observations.
    > Why it matters: <one-line contextual note in the configured language>
    ```
 
+   - **Short title:** Must be specific and keyword-rich — it's the primary signal when scanning. Use concrete nouns and verbs, not vague labels. Good: "Live commerce for K-POP signed goods". Bad: "New sales channel idea".
    - **Date and time:** Use the current local date and 24h time (`YYYY-MM-DD HH:MM`)
    - **Project tag:** Append `` `#<project-folder-name>` `` after the timestamp. Use the root folder name of the current working directory. If no project context is available, omit the tag.
 
@@ -126,6 +138,18 @@ Running scratchpad of ideas, tidbits, and observations.
 ## --list
 
 Read the ideas file for the specified scope. Print the last ~10 `### ` headings with their first line of content. Keep it scannable.
+
+---
+
+## --remove
+
+1. Parse: which scope (`work` or `me`).
+2. **Read the ideas file** for that scope.
+3. **List all `### ` headings** with a numbered index (1, 2, 3...) and their first line of content.
+4. **Ask the user** which idea(s) to remove by number.
+5. **Remove** the selected entry — the `### ` heading line, the idea text, and the `> Why it matters:` line (the full block between one `### ` and the next).
+6. **Write** the updated file.
+7. **Confirm** in the configured language, naming what was removed.
 
 ---
 
